@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetchMoviesByQuery } from "../components/tmdbAPI";
+import MovieList from "../components/MovieList";
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -41,18 +42,7 @@ export default function MoviesPage() {
         <button type="submit">Search</button>
       </form>
 
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <Link
-              to={`/movies/${movie.id}`}
-              state={{ from: `/movies?query=${query}` }}
-            >
-              {movie.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <MovieList movies={movies} />
     </div>
   );
 }
