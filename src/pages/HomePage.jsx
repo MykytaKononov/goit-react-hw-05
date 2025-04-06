@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { fetchTrendingMovies } from "../components/tmdbAPI";
+import MovieList from "../components/MovieList";
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
@@ -12,15 +12,7 @@ export default function HomePage() {
   return (
     <div>
       <p>Trending Today</p>
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} state={{ movie }}>
-              {movie.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <MovieList movies={movies} />
     </div>
   );
 }
