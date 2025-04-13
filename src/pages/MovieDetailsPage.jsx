@@ -1,11 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  useParams,
-  useLocation,
-  Link,
-  Outlet,
-  useNavigate,
-} from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useParams, useLocation, Link, Outlet } from "react-router-dom";
 import { fetchMovieDetails } from "../components/tmdbAPI";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -13,7 +7,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
+  const backLinkRef = useRef(location.state?.from || "/");
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
@@ -37,9 +31,7 @@ export default function MovieDetailsPage() {
 
   return (
     <div>
-      <button onClick={() => navigate(location.state?.from || "/movies")}>
-        Go back
-      </button>
+      <Link to={backLinkRef.current}>Go back</Link>
       <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
         <img
           src={movie.poster_path ? `${IMAGE_BASE_URL}${movie.poster_path}` : ""}
